@@ -10,9 +10,9 @@ The present project contains simple, minimally complete examples showing how to 
 
 ### Contents of this repository:
 
-  `c/` - simple single-thread C example, 1D array
-  `c_2domp/` - 2D array, multi-thread OpenMP example
-  `mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in the makefiles to the location of your `mwrap` executable.
+`c/` - simple single-thread C example, 1D array  
+`c_2domp/` - 2D array, multi-thread OpenMP example  
+`mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in the makefiles to the location of your `mwrap` executable.  
 
 ### Notes for MWrap:
 
