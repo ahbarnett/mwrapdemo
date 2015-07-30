@@ -1,19 +1,21 @@
-% MWrap file for C demo. Generates interface.c and arraysin1d.m
+% MWrap file for C demo. Generates gateway.c and arraysin1d.m
+% This is augmented MATLAB code, ie there are special lines beginning with
+% the @ and # symbols.
 
 @function y=arraysin1d(x)
 % ARRAYSIN1D  compute sine of all elements of a 1D array
 %
 % y = arraysin1d(x) returns in y the sine of all elements of a 1D array x
 %
-% Note: single-thread version
+% Note: single-threaded
 
 % You can do any MATLAB preprocessing here
 if ~isvector(x), error('x must be a row or column vector'); end
 N = numel(x);
 
-% since y has type 'output', no preallocation is needed
+% since y has type 'output' of given size, no MATLAB preallocation is needed
 
-% code for calling the C function, using same variable names as for MATLAB.
+% Code for calling the C function, using same variable names as for MATLAB.
 % Note the trailing semicolon:
 # arraysin1d(int N, double[] x, output double[N] y);
 
