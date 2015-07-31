@@ -11,13 +11,16 @@ The present project contains simple, minimally complete examples showing how to 
 ### Contents of this repository:
 
 `c/` - simple single-thread C example, 1D array, complex, and a Boolean  
-`c2domp/` - 2D array, multi-thread OpenMP example  
+`c2domp/` - 2D array, multi-thread OpenMP C example  
+`f/` - simple single-thread Fortran example, 1D array, complex, and a Boolean  
+`f2domp/` - 2D array, multi-thread OpenMP Fortran example  
 `mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in the makefiles to the location of your `mwrap` executable.  
 
 ### My usage notes for MWrap:
 
+* The makefiles I include contain useful flags.
 * Function names cannot use _ (underscore). It will fail in a non-informative way if you try this.
 * To get mex compilation working on your system you may need to edit `bin/mexopts.sh` in your MATLAB installation directory. On an ubuntu 12.04 system running MATLAB R2012a I needed to add the flag `--openmp` to `LDFLAGS` in the `glnxa64)` case.
 * If you want to pass a flag to C, this is as an int. However, Booleans in MATLAB passed directly cause a segfault. They must be converted to doubles. See `c/demo.mw`
-
+* Text output from Fortran write(*,*) doesn't seem to make it to the MATLAB terminal. For C, stdout is passed through fine.
 
