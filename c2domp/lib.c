@@ -22,7 +22,7 @@ void array2domp(int n, double* a, int reps)
   int i,r;
 #pragma omp parallel
   {
-    if (omp_get_thread_num()==1) printf("%d threads\n", omp_get_num_threads());
+    if (omp_get_thread_num()==0) printf("%d threads\n", omp_get_num_threads());
 #pragma omp for private(i,r) schedule(static)
     for (i=0;i<n;++i)
       for (r=0;r<reps;++r)

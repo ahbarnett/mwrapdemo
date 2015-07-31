@@ -1,4 +1,4 @@
-% Test script for the Fortran MWrap demo.
+% Test script for the Fortran MWrap demo. Identical to ../c/test.m
 % Before using, use "make" to call MWrap then compile the MEX object
 
 N = 1e6;
@@ -9,5 +9,3 @@ flag = true;   % test Boolean
 fprintf('myfunc double sin accuracy test: %.3g\n', norm(y - sin(x)))
 fprintf('myfunc complex double accuracy test: %.3g\n', norm(z-w^2))
 % should be small
-
-% Note write(*,*) output doesn't make it to MATLAB terminal.

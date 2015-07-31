@@ -20,7 +20,7 @@ gateway.c: demo.mw makefile
 
 # How to make MATLAB/MEX compile the interface (whatever libs needed):
 mexfile: gateway.c lib.o makefile
-	mex gateway.c lib.o -lgfortran -lm
+	mex gateway.c lib.o -largeArrayDims -lgfortran -lm
 
 # Remove the MEX interface, MATLAB caller, and MEX file:
 clean:

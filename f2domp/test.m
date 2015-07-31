@@ -1,4 +1,5 @@
-% Test script for the C mwrap demo with 2d double arrays and openmp.
+% Test script for the Fortran MWrap demo with 2d double arrays and openmp.
+% Identical to ../c2domp/test.m
 % Before using, use "make" to call MWrap then compile the MEX object.
 
 % Code does a billion sin evals in a contrived situation in which OpenMP is
