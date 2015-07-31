@@ -3,6 +3,9 @@
 
 N = 1e6;
 x = rand(N,1);
-y = arraysin1d(x);
-fprintf('arraysin1d accuracy test: %.3g\n', norm(y - sin(x)))
+w = 5+4.7i;
+flag = true;   % test Boolean
+[y z] = myfunc(x,w,flag);
+fprintf('myfunc double sin accuracy test: %.3g\n', norm(y - sin(x)))
+fprintf('myfunc complex double accuracy test: %.3g\n', norm(z-w^2))
 % should be small

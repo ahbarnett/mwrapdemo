@@ -1,25 +1,31 @@
-% MWrap file for C demo. Generates gateway.c and arraysin1d.m
+% MWrap file for C demo. Generates gateway.c and myfunc.m
 % This is augmented MATLAB code, ie there are special lines beginning with
 % the @ and # symbols.
 
-@function y=arraysin1d(x)
-% ARRAYSIN1D  compute sine of all elements of a 1D array
+@function [y z]=myfunc(x,w,flag)
+% MYFUNC  minimal function for MWrap demo
 %
-% y = arraysin1d(x) returns in y the sine of all elements of a 1D array x
+% [y z] = myfunc(x,w,flag) returns in y the sine of all elements of a 1D array
+%  x, and in z the square of the complex number w, and prints the value of flag.
 %
 % Note: single-threaded MEX
 
 % You can do any MATLAB preprocessing here
 if ~isvector(x), error('x must be a row or column vector'); end
 N = numel(x);
+if numel(w)~=1, error('w must be a scalar'); end
+if isreal(w), w = complex(w); end
+flag = double(flag);  % crucial even though it's int type in C
 
 % since y has type 'output' of given size, no MATLAB preallocation is needed
 
 % Code for calling the C function, using same variable names as for MATLAB.
 % Note the trailing semicolon:
-# arraysin1d(int N, double[] x, output double[N] y);
+# myfunc(int N, double[] x, output double[N] y, inout dcomplex[] w, int flag);
 
-% You can do any MATLAB postprocessing here
+% do any MATLAB postprocessing here
+z = w;
 
 % Now you could also add something like the above for new interfaces, each
-% generating a new .m wrapper file, but all within the same gateway...
+% generating a new .m wrapper file, but all within the same gateway; see
+% ../c2domp

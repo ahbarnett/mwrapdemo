@@ -1,7 +1,8 @@
 % Test script for the C mwrap demo with 2d arrays and openmp.
 % Before using, use "make" to call MWrap then compile the MEX object
 
-reps = 1e7;     % code applies sin to N-by-N random array iterating reps times.
+% code applies sin to N-by-N random array iterating reps times.
+reps = 1e7;
 N = 10;         % For small array and large reps, vectorized MATLAB
                 % isn't efficient, even though its sin is multithreaded and
                 % the array fits in cache....
