@@ -1,4 +1,4 @@
-/* minimal C library showing openmp. Barnett 7/30/15 */
+/* minimal C library showing openmp and overwriting arrays. Barnett 7/30/15 */
 
 #include <math.h>
 #include <omp.h>

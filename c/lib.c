@@ -1,4 +1,4 @@
-/* minimal C library for MWarp demo. Barnett 7/30/15 */
+/* minimal C library for MWrap demo. Barnett 7/30/15 */
 
 #include <math.h>
 #include <complex.h>
