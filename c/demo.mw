@@ -7,7 +7,7 @@
 %
 % y = arraysin1d(x) returns in y the sine of all elements of a 1D array x
 %
-% Note: single-threaded
+% Note: single-threaded MEX
 
 % You can do any MATLAB preprocessing here
 if ~isvector(x), error('x must be a row or column vector'); end

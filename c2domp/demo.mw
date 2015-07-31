@@ -1,0 +1,34 @@
+% MWrap file for C demo w/ OpenMP.
+% Generates gateway.c, array2d.m and array2domp.m.
+% Illustrates inout type, and multiple interfaces in a single gateway.
+% First see ../c/demo.mw on which this example builds.
+
+% --------------------------------------------------------------------------
+@function y=array2d(x,reps)
+% ARRAY2D  compute iterated sin of all elements of a 2D array
+%
+% y = array2d(x,reps) returns in y all elements of a 2D array x after sin is
+%  applied to them reps times.
+%
+% Note: single-threaded MEX
+
+N = numel(x);   % total size
+% MATLAB preallocation of y needed since it's 'inout' type
+y = x;
+% Note: treated as contiguous 1D array as far as C is concerned:
+# array2d(int N, inout double[N] y, int reps);
+
+% --------------------------------------------------------------------------
+@function y=array2domp(x,reps)
+% ARRAY2DOMP  compute iterated sin of all elements of a 2D array
+%
+% y = array2domp(x,reps) returns in y all elements of a 2D array x after sin is
+%  applied to them reps times.
+%
+% Note: multi-threaded MEX
+
+N = numel(x);   % total size
+% MATLAB preallocation of y needed since it's 'inout' type
+y = x;
+% Note: treated as contiguous 1D array as far as C is concerned:
+# array2domp(int N, inout double[N] y, int reps);
