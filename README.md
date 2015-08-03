@@ -44,7 +44,7 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 `makefile` - top-level makefile to compile all demos  
 `make.inc.example` - system-specific makefile settings
 (copy to `make.inc` and edit that rather than changing this distributed file)  
-`mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in the makefiles to the location of your `mwrap` executable.  
+`mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in `make.inc` to the location of your `mwrap` executable.  
 
 ### My usage notes for MWrap
 
