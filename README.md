@@ -24,9 +24,9 @@ Download this repository either via `git clone` or as zip archive, to a linux or
 
 1. Go back to the main `mwrapdemo` directory. Copy `make.inc.example` to `make.inc`. Type `mex` from the command line; you should get something like `mex:  nofile name given.` and something mentioning MATLAB. If you don't, then you need to find the path to your mex executable then edit `make.inc` to give this mex location. (Sometimes on a Mac `mex` calls pdftex in which case you have to give the full path to `mex` such as `/Applications/MATLAB_2012a.app/bin/mex`.)
 
-1. Type `make`. This should make all examples in the four directories.
+1. Type `make`. This should make all examples in the four directories. If it breaks at some point, don't panic; instead `cd` to each the four directories in turn and type `make`, to see what functionality you can get.
 
-1. From MATLAB, in the main directory, type `testall` which should run four tests, each returning a set of error figures, which should be small.
+1. From MATLAB, in the main directory, type `testall` which should run four tests, each returning a set of error figures, which should be small. As above, if you weren't able to make all four directories, `cd` to each in turn and try `test` in MATLAB.
 
 See the README files in each of the directories for more information.
 
