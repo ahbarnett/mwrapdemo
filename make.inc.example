@@ -3,6 +3,11 @@
 # edit any locations of utilities, before running make.
 # Barnett 8/3/15
 
+# Change these if you want to use different compilers:
+
+CC = gcc
+FC = gfortran
+
 # Change this to location of MATLAB's command line mex executable:
 # (For a Mac system, this is something of the form
 #  /Applications/MATLAB_R2014a.app/bin/mex )

@@ -14,15 +14,18 @@ The present project contains simple, minimally complete examples showing how to 
 C and Fortran compilers supporting C99 and OpenMP.
 If you are on a Mac system, you need Xcode to use MEX.  
 GNU make.  
-Optional: [MWrap](http://www.cs.cornell.edu/~bindel/sw/mwrap/), although a distribution of MWrap is included in this repository.
+Optional: [MWrap](http://www.cs.cornell.edu/~bindel/sw/mwrap/), although a distribution of MWrap is also included in this repository.
 
 ### Getting started
 
 Download this repository either via `git clone` or as zip archive, to a linux or Mac machine. Then
 
-1. Change directory into `mwrap-0.33.3/` and type `make`. This makes the executable `mwrap` for your operating system. If this fails, see the MWrap documentation `mwrap.pdf`, or failing that contact David Bindel, author of MWrap.
+1. Install MWrap. Recommended is to install globally on your system, eg via `sudo apt-get install mwrap` on ubuntu or debian linux, or from [here](http://www.cs.cornell.edu/~bindel/sw/mwrap/). Then in this case copy `make.inc.example` to `make.inc`, and
+edit `make.inc` to point the `MWRAP` variable to wherever your `mwrap` executable is. Instead you may install locally: change directory into `mwrap-0.33.3/` and type `make`. This makes the executable `mwrap`. If this fails, see the MWrap documentation `mwrap.pdf`, or failing that contact David Bindel.
 
-1. Go back to the main `mwrapdemo` directory. Copy `make.inc.example` to `make.inc`. Type `mex` from the command line; you should get something like `mex:  nofile name given.` and something mentioning MATLAB. If you don't, then you need to find the path to your mex executable then edit `make.inc` to give this mex location. (Sometimes on a Mac `mex` calls pdftex in which case you have to give the full path to `mex` such as `/Applications/MATLAB_2012a.app/bin/mex`.)
+1. Go back to the main `mwrapdemo` directory. Make sure you copied `make.inc.example` to `make.inc`. Type `mex` from the command line; you should get something like `mex:  nofile name given.` and something mentioning MATLAB. If you don't, then you need to find the path to your mex executable then edit `make.inc` to make the variable `MEX` point to your mex executable. (Sometimes on a Mac `mex` calls pdftex in which case you have to give the full path to `mex` such as `/Applications/MATLAB_2012a.app/bin/mex`.)
+
+1. Check you have the compilers `gcc` and `gfortran`. If not, adjust the variables `CC` and `FC` respectively in `make.inc` to point to your compilers.
 
 1. Type `make`. This should make all examples in the four directories. If it breaks at some point, don't panic; instead `cd` to each the four directories in turn and type `make`, to see what functionality you can get.
 

@@ -8,7 +8,7 @@ default: mexfile
 
 # How to compile your C library function: (-fPIC is needed for linking to MEX)
 lib.o: lib.c makefile
-	gcc -fPIC -O3 -c lib.c
+	$(CC) -fPIC -O3 -c lib.c
 
 # Tell mwrap to make the interface and the name of the final MEX file:
 # Note: -c99complex assumes usual C complex numbers (see MWrap docs)
