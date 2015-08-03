@@ -6,3 +6,4 @@ fprintf('Testing Fortran interfaces...\n')
 cd ../f; test
 cd ../f2domp; test
 cd ..
+fprintf('Completed all mwrapdemo tests.\n')

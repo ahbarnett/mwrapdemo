@@ -1,0 +1,16 @@
+# System-dependent settings for makefiles.
+# If you want to alter these settings, copy this file to make.inc, and
+# edit any locations of utilities, before running make.
+# Barnett 8/3/15
+
+# Change this to location of MATLAB's command line mex executable:
+# (For a Mac system, this is something of the form
+#  /Applications/MATLAB_R2014a.app/bin/mex )
+
+MEX = mex
+
+# Change this to location of your MWrap executable if you don't want to use
+# the shipped version. This is either an absolute path, or a path relative to
+# each of the four demo subdirectories:
+
+MWRAP = ../mwrap-0.33.3/mwrap

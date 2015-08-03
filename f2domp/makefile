@@ -1,8 +1,6 @@
 # mwrapdemo makefile for interface to Fortran library, openMP & 2d array version
 # Barnett 7/31/15
-
-# Point to your mwrap executable:
-MWRAP = ../mwrap-0.33.3/mwrap
+include ../make.inc
 
 # This is the task run if "make" is done with no arguments ("mexfile" is not
 # a file, just a name for a compilation task given below):
@@ -20,7 +18,7 @@ gateway.c: demo.mw makefile
 
 # How to make MATLAB/MEX compile the interface (whatever libs needed):
 mexfile: gateway.c lib.o makefile
-	mex gateway.c lib.o -largeArrayDims -lgfortran -lm -lgomp
+	$(MEX) gateway.c lib.o -largeArrayDims -lgfortran -lm -lgomp
 
 # Remove the MEX interface, MATLAB caller, and MEX file:
 clean:
