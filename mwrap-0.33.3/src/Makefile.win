@@ -1,0 +1,43 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling mwrap under Windows (C++ compiler needed)
+#-------------------------------------------------------------------------
+
+!INCLUDE <../make.win.inc>
+PROJ=mwrap
+
+#-------------------------------------------------------------------------
+# Main-Targets
+#-------------------------------------------------------------------------
+
+all: $(PROJ).exe
+  @echo.
+  @echo Done.
+
+clean:
+  -erase *.obj $(PROJ).exe
+
+realclean: clean
+  -erase lexwin.yy.c mwrap.cc mwrap.hh mwrap.output
+
+#-------------------------------------------------------------------------
+# Sub-Targets
+#-------------------------------------------------------------------------
+
+$(PROJ).exe: mwrap.obj lexwin.yy.obj mwrap-ast.obj mwrap-typecheck.obj \
+	mwrap-mgen.obj mwrap-cgen.obj
+  LINK $(LFLAGS) /OUT:$(PROJ).exe $**
+
+
+mwrap.cc: mwrap.y
+	$(BISON) -d -v -o $@ $**
+
+lexwin.yy.c: mwrap.l
+	$(FLEX) --wincompat --outfile=$@ $**
+
+
+.cc.obj:
+  $(CXX) /c $(CFLAGS) /Tp $<
+
+.c.obj:
+  $(CC)  /c $(CFLAGS) /Tc $<
+  
