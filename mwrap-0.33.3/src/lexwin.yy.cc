@@ -578,6 +578,12 @@ char *yytext;
 #include <string.h>
 #include <ctype.h>
 
+#ifdef __cplusplus
+#define EXTERN_C extern "C"
+#else
+#define EXTERN_C extern
+#endif
+
 extern int listing_flag;          // Output filenames from @ commands?
 extern int mbatching_flag;        // Do we want to output on @ commands?
 extern int linenum;               // Lexer line number
@@ -586,7 +592,7 @@ extern FILE* outcfp;              // C output file
 
 static int done_at_switch;        // Set when @ redirection is done
 
-extern "C" char* mwrap_strdup(char* s);
+EXTERN_C char* mwrap_strdup(char* s);
 
 static int is_name_char(char c)
 {
@@ -622,8 +628,8 @@ static char* fname_scan_line(char* s)
 YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
 int include_stack_line[MAX_INCLUDE_DEPTH];
 int include_stack_ptr = 0;
-extern "C" void set_include_name(const char* s);
-extern "C" void get_include_name();
+EXTERN_C void set_include_name(const char* s);
+EXTERN_C void get_include_name();
 
 
 /* The lexer switches states when it sees a specially formatted comment
