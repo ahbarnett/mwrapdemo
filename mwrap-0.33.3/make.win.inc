@@ -1,22 +1,8 @@
 # === Compilers ===
 
-
-# Uncomment this line for new-style classdef support
-# OOFLAG=-DR2008OO
-
-# Uncomment this line for C99 complex support
-TESTC99COMPLEX=test_c99_complex
-
 CC=    cl
 CXX=   cl
 LINK=  link
-MEX=   mex $(OOFLAG)
-
-# Use the following for 64-bit MEX
-# MEX=   mex -largeArrayDims $(OOFLAG)
-
-# Use the following for GNU Octave.
-MEX=   mkoctfile --mex
 
 # Location of Win-Flex-Bison compiler (not needed unless you are planning to
 # modify the grammar -- the default installation comes with the relevant
@@ -24,6 +10,21 @@ MEX=   mkoctfile --mex
 WINFLEXBISONPATH=X:\projekte\1510_MatLightTracer\mwrap\win_flex_bison
 FLEX=$(WINFLEXBISONPATH)\win_flex
 BISON=$(WINFLEXBISONPATH)\win_bison
+
+
+# === MEX Compiler ===
+
+# Uncomment this line for new-style classdef support
+# OOFLAG=-DR2008OO
+
+# Uncomment this line for C99 complex support
+# TESTC99COMPLEX=test_c99_complex
+
+# Define Mex compiler
+#MEX=   mex $(OOFLAG)                  # 32-bit MEX
+MEX=   mex -largeArrayDims $(OOFLAG)  # 64-bit MEX
+#MEX=   mkoctfile --mex                # GNU Octave.
+
 
 #-------------------------------------------------------------------------
 # Compiler-Flags

@@ -1,0 +1,106 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling tests under Windows
+# If you get the error: 
+#   "NMAKE : fatal error U1045: spawn failed : Permission denied"
+#   you have to set the read & execute permission for the file subproc.bat
+#-------------------------------------------------------------------------
+
+!INCLUDE <../make.win.inc>
+MWRAP=..\mwrap.exe
+
+#-------------------------------------------------------------------------
+# Main-Targets
+#-------------------------------------------------------------------------
+
+all: test_transfers test_cpp_complex $(TESTC99COMPLEX) test_syntax \
+	test_typecheck test_catch test_fortran1 test_fortran2 \
+	test_redirect test_include
+  @echo .
+  @echo All tests successful.
+
+
+test_transfers:
+   @echo .
+	@echo compilation of test_transfers ...
+   @$(MWRAP) -mex test_transfersmex \
+		-c test_transfersmex.cc \
+		-m test_transfers.m test_transfers.mw
+	@$(MEX) test_transfersmex.cc
+
+test_cpp_complex:
+   @echo .
+	@echo compilation of test_cpp_complex ...
+   @$(MWRAP) -cppcomplex \
+		-mex test_cpp_complexmex \
+		-c test_cpp_complexmex.cc \
+		-m test_cpp_complex.m test_cpp_complex.mw
+	@$(MEX) test_cpp_complexmex.cc
+
+test_c99_complex:
+   @echo .
+   @echo compilation of test_c99_complex ...
+	@$(MWRAP) -c99complex \
+		-mex test_c99_complexmex \
+		-c test_c99_complexmex.c \
+		-m test_c99_complex.m test_c99_complex.mw
+	@$(MEX) test_c99_complexmex.c
+
+test_syntax:
+   @echo .
+   @echo test_syntax ...
+	@- $(MWRAP) -cppcomplex test_syntax.mw 2> test_syntax.log
+	@FC test_syntax.log test_syntax.ref >NUL && echo Ok || echo Failed
+
+test_typecheck:
+   @echo .
+   @echo test_typecheck ...
+   @- $(MWRAP) -cppcomplex test_typecheck.mw 2> test_typecheck.log
+	@FC test_typecheck.log test_typecheck.ref > NUL && echo Ok || echo Failed
+
+test_catch:
+	@echo .
+   @echo compilation of test_catch ...
+   @$(MWRAP) -mex test_catchmex -catch \
+		-c test_catchmex.cc \
+		-m test_catch.m \
+		test_catch.mw
+	@$(MEX) test_catchmex.cc
+
+test_fortran1:
+	@echo .
+   @echo compilation of test_fortran1 ...
+   @$(MWRAP) -mex test_fortran1mex \
+		-c test_fortran1mex.cc \
+		-m test_fortran1.m \
+		test_fortran1.mw
+	@$(MEX) test_fortran1mex.cc
+
+test_fortran2:
+	@echo .
+   @echo compilation of test_fortran2 ...
+   @$(MWRAP) -mex test_fortran2mex \
+		-c test_fortran2mex.c \
+		-m test_fortran2.m \
+		test_fortran2.mw
+	@$(MEX) test_fortran2mex.c
+
+test_redirect:
+	@echo .
+   @echo compilation of test_redirect ...
+   @$(MWRAP) -mb test_redirect.mw
+
+test_include: 
+	@echo .
+   @echo compilation of test_include ...
+   @$(MWRAP) -mex test_includemex\
+		-c test_includemex.cc \
+		-m test_include.m test_include.mw
+	@$(MEX) test_includemex.cc
+
+clean:
+	-erase *~ *.mex* *.o* test_typecheck.log
+	-erase test_fortran1.m test_fortran2.m test_transfers.m test_catch.m
+	-erase test_cpp_complex.m test_c99_complex.m
+	-erase test_transfersmex.cc test_catchmex.cc test_fortranmex.cc
+	-erase test_cpp_complexmex.cc test_c99_complexmex.c
+	-erase test_redirect.m test_redirect1.m

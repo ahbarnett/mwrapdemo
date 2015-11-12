@@ -10,8 +10,9 @@ PROJ=mwrap
 #-------------------------------------------------------------------------
 
 all: $(PROJ).exe
-  @echo.
-  @echo Done.
+  copy $(PROJ).exe ..
+  @echo .
+  @echo Finished compilation of MWrap successfully.
 
 clean:
   -erase *.obj *.pdb *.ilk *.pch $(PROJ).exe $(PROJ).output
@@ -37,4 +38,3 @@ lexwin.yy.cc: mwrap.l
   $(CXX) /c $(CFLAGS) /Tp $<
 
 
-  
