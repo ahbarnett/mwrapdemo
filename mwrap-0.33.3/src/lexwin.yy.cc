@@ -1,6 +1,6 @@
-#line 2 "lexwin.yy.c"
+#line 2 "lexwin.yy.cc"
 
-#line 4 "lexwin.yy.c"
+#line 4 "lexwin.yy.cc"
 
 #define  YY_INT_ALIGNED short int
 
@@ -586,7 +586,7 @@ extern FILE* outcfp;              // C output file
 
 static int done_at_switch;        // Set when @ redirection is done
 
-extern char* mwrap_strdup(char* s);
+extern "C" char* mwrap_strdup(char* s);
 
 static int is_name_char(char c)
 {
@@ -622,8 +622,8 @@ static char* fname_scan_line(char* s)
 YY_BUFFER_STATE include_stack[MAX_INCLUDE_DEPTH];
 int include_stack_line[MAX_INCLUDE_DEPTH];
 int include_stack_ptr = 0;
-extern void set_include_name(const char* s);
-extern void get_include_name();
+extern "C" void set_include_name(const char* s);
+extern "C" void get_include_name();
 
 
 /* The lexer switches states when it sees a specially formatted comment
@@ -658,7 +658,7 @@ extern void get_include_name();
 
 
 
-#line 662 "lexwin.yy.c"
+#line 662 "lexwin.yy.cc"
 
 #define INITIAL 0
 #define CSTATE 1
@@ -847,7 +847,7 @@ YY_DECL
     
 #line 97 "mwrap.l"
 
-#line 851 "lexwin.yy.c"
+#line 851 "lexwin.yy.cc"
 
 	if ( !(yy_init) )
 		{
@@ -1239,7 +1239,7 @@ YY_RULE_SETUP
 #line 231 "mwrap.l"
 ECHO;
 	YY_BREAK
-#line 1243 "lexwin.yy.c"
+#line 1243 "lexwin.yy.cc"
 
 	case YY_END_OF_BUFFER:
 		{

@@ -81,11 +81,9 @@
 #include <string>
 #include "mwrap-ast.h"
 
-extern "C" {
-    int yylex();
-    int yywrap();
-    int yyerror(const char* s);
-}
+extern int yylex();
+extern "C" int yywrap();
+extern "C" int yyerror(const char* s);
 
 using std::string;
 
