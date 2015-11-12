@@ -11,10 +11,12 @@
 #include <string.h>
 #include <ctype.h>
 
+#ifndef EXTERN_C
 #ifdef __cplusplus
 #define EXTERN_C extern "C"
 #else
 #define EXTERN_C extern
+#endif
 #endif
 
 extern int listing_flag;          // Output filenames from @ commands?
