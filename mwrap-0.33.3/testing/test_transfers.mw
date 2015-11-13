@@ -20,6 +20,7 @@ $[
 
 #include <stdio.h>
 #include <string.h>
+#include <matrix.h>
 
 struct Pair {
     Pair(double x, double y) { xy[0] = x; xy[1] = y; }
@@ -141,16 +142,16 @@ tassert(x == 7, 'Type casting');
 % ================================================================
 function test_complex;
 
-$ cmplx zsum(cmplx* zarray, int n) {
+$ cmplx zsum(cmplx* zarray, mwSize n) {
 $     cmplx sum(0);
-$     for (int i = 0; i < n; ++i) sum += zarray[i];
+$     for (mwIndex i = 0; i < n; ++i) sum += zarray[i];
 $     return sum;
 $ }
 
 zarray = rand(10,1) + 1i*rand(10,1);
 n = length(zarray);
 # typedef dcomplex cmplx;
-# cmplx result = zsum(cmplx[] zarray, int n);
+# cmplx result = zsum(cmplx[] zarray, mwSize n);
 tassert(abs(result-sum(zarray)) < 1e-10*norm(zarray), 'Complex support');
 
 
