@@ -1,0 +1,17 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling zlib example; see www.zlib.net
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\make.win.inc>
+MW=..\..\mwrap.exe
+
+gzmex: mex_setup
+	$(MW) -mex gzmex -mb gzfile.mw
+	$(MW) -mex gzmex -c gzmex.c gzfile.mw
+	-$(MEX) gzmex.c -lz
+
+mex_setup:
+   @$(MEX) -setup C++
+
+clean:
+	-erase gz*.m gzmex.* *.o* eye.gz

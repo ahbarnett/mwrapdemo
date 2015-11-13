@@ -1,0 +1,28 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling Mwrap source and tests
+#-------------------------------------------------------------------------
+
+!INCLUDE <make.win.inc>
+NMAKE=nmake /C /f Makefile.win
+
+bin:
+   @echo Building MWrap source
+	@cd src & $(NMAKE) & cd ..
+
+test:
+	@echo Building Tests
+   @cd testing & $(NMAKE) & cd ..
+
+demo:
+   @echo Building Examples
+   @cd example & $(NMAKE) & cd ..
+
+clean:
+	@-cd $(MAKEDIR)/src     & $(NMAKE) clean
+	@-cd $(MAKEDIR)/testing & $(NMAKE) clean
+   @-cd $(MAKEDIR)/example & $(NMAKE) clean
+   @-cd $(MAKEDIR)
+
+realclean: clean
+	@-cd $(MAKEDIR)/src & $(NMAKE) realclean
+   @-cd $(MAKEDIR)

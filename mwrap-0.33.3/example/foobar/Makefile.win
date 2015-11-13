@@ -1,0 +1,17 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling foobar example
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\make.win.inc>
+MW=..\..\mwrap.exe
+
+all: mex_setup
+	@$(MW) -mex fbmex -m foobar.m foobar.mw
+	@$(MW) -mex fbmex -c fbmex.c foobar.mw
+	@$(MEX) fbmex.c
+
+mex_setup:
+   @$(MEX) -setup C++
+
+clean:
+	-erase foobar.m fbmex.c fbmex.mex* *.obj

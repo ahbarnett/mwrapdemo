@@ -13,7 +13,8 @@ all: mex_setup test_transfers test_cpp_complex $(TESTC99COMPLEX) test_syntax \
 	test_typecheck test_catch test_fortran1 test_fortran2 \
 	test_redirect test_include
    @echo .
-   @echo All tests successful.
+   @echo All tests compiled successfully.
+   @echo Start Matlab and run the test scripts in the testing directory.
 
 mex_setup:
    $(MEX) -setup C++

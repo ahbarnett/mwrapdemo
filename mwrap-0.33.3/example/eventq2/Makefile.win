@@ -1,0 +1,17 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling eventq2 example
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\make.win.inc>
+MW=..\..\mwrap.exe
+
+mex: mex_setup
+	$(MW) -mex eventq2mex -c eventq2mex.cc -mb eventq2.mw
+	$(MEX) eventq2mex.cc
+
+mex_setup:
+   @$(MEX) -setup C++
+
+clean:
+	-erase EventQ_*.m
+	-erase eventq2mex.* *.obj

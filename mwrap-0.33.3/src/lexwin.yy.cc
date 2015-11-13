@@ -666,7 +666,7 @@ EXTERN_C void get_include_name();
 
 
 
-#line 668 "lexwin.yy.cc"
+#line 670 "lexwin.yy.cc"
 
 #define INITIAL 0
 #define CSTATE 1
@@ -853,9 +853,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 103 "mwrap.l"
+#line 105 "mwrap.l"
 
-#line 857 "lexwin.yy.cc"
+#line 859 "lexwin.yy.cc"
 
 	if ( !(yy_init) )
 		{
@@ -940,7 +940,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 104 "mwrap.l"
+#line 106 "mwrap.l"
 { 
     if (mbatching_flag && outfp)
         fclose(outfp);
@@ -950,12 +950,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 111 "mwrap.l"
+#line 113 "mwrap.l"
 { BEGIN INCLSTATE; return NON_C_LINE; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 113 "mwrap.l"
+#line 115 "mwrap.l"
 { 
     if (mbatching_flag && outfp)
         fclose(outfp); 
@@ -966,29 +966,29 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 121 "mwrap.l"
+#line 123 "mwrap.l"
 { BEGIN CSTATE; }
 	YY_BREAK
 case 5:
 /* rule 5 can match eol */
 YY_RULE_SETUP
-#line 122 "mwrap.l"
+#line 124 "mwrap.l"
 { BEGIN BSTATE; ++linenum; return NON_C_LINE; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 123 "mwrap.l"
+#line 125 "mwrap.l"
 { BEGIN SSTATE;            return NON_C_LINE; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 124 "mwrap.l"
+#line 126 "mwrap.l"
 { BEGIN COMMSTATE;         return NON_C_LINE; }
 	YY_BREAK
 case 8:
 /* rule 8 can match eol */
 YY_RULE_SETUP
-#line 126 "mwrap.l"
+#line 128 "mwrap.l"
 { if (outfp) fprintf(outfp, "%s", yytext); 
                  ++linenum; 
                  BEGIN 0; 
@@ -996,12 +996,12 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 130 "mwrap.l"
+#line 132 "mwrap.l"
 { if (outfp) fprintf(outfp, "%s", yytext); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 131 "mwrap.l"
+#line 133 "mwrap.l"
 { if (outfp) fprintf(outfp, "%s", yytext); 
                  BEGIN TSTATE; 
                  return NON_C_LINE; }
@@ -1009,12 +1009,12 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 135 "mwrap.l"
+#line 137 "mwrap.l"
 { ++linenum; BEGIN 0; }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 136 "mwrap.l"
+#line 138 "mwrap.l"
 ;
 	YY_BREAK
 case YY_STATE_EOF(INITIAL):
@@ -1026,7 +1026,7 @@ case YY_STATE_EOF(FSTATE):
 case YY_STATE_EOF(TSTATE):
 case YY_STATE_EOF(COMMSTATE):
 case YY_STATE_EOF(INCLSTATE):
-#line 138 "mwrap.l"
+#line 140 "mwrap.l"
 {
     if (--include_stack_ptr < 0) {
         yyterminate();
@@ -1041,12 +1041,12 @@ case YY_STATE_EOF(INCLSTATE):
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 150 "mwrap.l"
+#line 152 "mwrap.l"
 ;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 151 "mwrap.l"
+#line 153 "mwrap.l"
 {
     if (include_stack_ptr >= MAX_INCLUDE_DEPTH) {
         fprintf(stderr, "Error: Includes nested too deeply");
@@ -1068,12 +1068,12 @@ YY_RULE_SETUP
 case 15:
 /* rule 15 can match eol */
 YY_RULE_SETUP
-#line 168 "mwrap.l"
+#line 170 "mwrap.l"
 { ++linenum; BEGIN 0; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 170 "mwrap.l"
+#line 172 "mwrap.l"
 {
     char* fname = fname_scan_line(yytext);
     if (mbatching_flag) {
@@ -1092,17 +1092,17 @@ YY_RULE_SETUP
 case 17:
 /* rule 17 can match eol */
 YY_RULE_SETUP
-#line 184 "mwrap.l"
+#line 186 "mwrap.l"
 { ++linenum; BEGIN 0; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 186 "mwrap.l"
+#line 188 "mwrap.l"
 ;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 187 "mwrap.l"
+#line 189 "mwrap.l"
 { if (mbatching_flag && !done_at_switch) {
                          outfp = fopen(yytext, "w+");
                          if (!outfp) {
@@ -1119,86 +1119,86 @@ YY_RULE_SETUP
 case 20:
 /* rule 20 can match eol */
 YY_RULE_SETUP
-#line 199 "mwrap.l"
+#line 201 "mwrap.l"
 { ++linenum; BEGIN 0; }
 	YY_BREAK
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 201 "mwrap.l"
+#line 203 "mwrap.l"
 { if (outfp) fprintf(outfp, "%s", yytext); ++ linenum; BEGIN 0; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 202 "mwrap.l"
+#line 204 "mwrap.l"
 { if (outfp) fprintf(outfp, "%s", yytext); }
 	YY_BREAK
 case 23:
 /* rule 23 can match eol */
 YY_RULE_SETUP
-#line 204 "mwrap.l"
+#line 206 "mwrap.l"
 { if (outcfp) fprintf(outcfp, "%s", yytext); ++linenum; BEGIN 0; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 205 "mwrap.l"
+#line 207 "mwrap.l"
 { if (outcfp) fprintf(outcfp, "%s", yytext); }
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 207 "mwrap.l"
+#line 209 "mwrap.l"
 { ++linenum; BEGIN 0; }
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 208 "mwrap.l"
+#line 210 "mwrap.l"
 { if (outcfp) fprintf(outcfp, "%s", yytext); ++linenum; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 209 "mwrap.l"
+#line 211 "mwrap.l"
 { if (outcfp) fprintf(outcfp, "%s", yytext); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 211 "mwrap.l"
+#line 213 "mwrap.l"
 { return NEW; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 212 "mwrap.l"
+#line 214 "mwrap.l"
 { return FORTRAN; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 213 "mwrap.l"
+#line 215 "mwrap.l"
 { return INPUT; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 214 "mwrap.l"
+#line 216 "mwrap.l"
 { return OUTPUT; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 215 "mwrap.l"
+#line 217 "mwrap.l"
 { return INOUT; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 216 "mwrap.l"
+#line 218 "mwrap.l"
 { return CLASS; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 217 "mwrap.l"
+#line 219 "mwrap.l"
 { return TYPEDEF; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 219 "mwrap.l"
+#line 221 "mwrap.l"
 { 
     yylval.string = mwrap_strdup(yytext); 
     return ID; 
@@ -1206,7 +1206,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 223 "mwrap.l"
+#line 225 "mwrap.l"
 {
     yylval.string = mwrap_strdup(yytext); 
     return NUMBER; 
@@ -1215,7 +1215,7 @@ YY_RULE_SETUP
 case 37:
 /* rule 37 can match eol */
 YY_RULE_SETUP
-#line 227 "mwrap.l"
+#line 229 "mwrap.l"
 {
     yylval.string = mwrap_strdup(yytext);
     return STRING;
@@ -1223,31 +1223,31 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 231 "mwrap.l"
+#line 233 "mwrap.l"
 ;
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 233 "mwrap.l"
+#line 235 "mwrap.l"
 ;
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 234 "mwrap.l"
+#line 236 "mwrap.l"
 { ++linenum; BEGIN 0; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 235 "mwrap.l"
+#line 237 "mwrap.l"
 return yytext[0];
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 237 "mwrap.l"
+#line 239 "mwrap.l"
 ECHO;
 	YY_BREAK
-#line 1249 "lexwin.yy.cc"
+#line 1251 "lexwin.yy.cc"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -2239,7 +2239,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 236 "mwrap.l"
+#line 238 "mwrap.l"
 
 
 

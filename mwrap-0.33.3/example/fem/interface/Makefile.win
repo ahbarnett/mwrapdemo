@@ -1,0 +1,18 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling fem-interface example
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\..\make.win.inc>
+MW=..\..\..\mwrap.exe
+
+mex: mex_setup wrap
+	$(MEX) -I..\src femex.cc ..\src\*.obj
+	@move femex.* ..\mwfem
+	@move *.m ..\mwfem
+
+mex_setup:
+   @$(MEX) -setup C++
+
+wrap:
+	$(MW) -mex femex -c femex.cc \
+		-mb assembler.mw mesh.mw elements.mw
