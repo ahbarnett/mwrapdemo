@@ -1,8 +1,5 @@
 #-------------------------------------------------------------------------
 # NMAKE-Makefile for compiling tests under Windows
-# If you get the error: 
-#   "NMAKE : fatal error U1045: spawn failed : Permission denied"
-#   you have to set the read & execute permission for the file subproc.bat
 #-------------------------------------------------------------------------
 
 !INCLUDE <../make.win.inc>
@@ -12,12 +9,17 @@ MWRAP=..\mwrap.exe
 # Main-Targets
 #-------------------------------------------------------------------------
 
-all: test_transfers test_cpp_complex $(TESTC99COMPLEX) test_syntax \
+all: mex_setup test_transfers test_cpp_complex $(TESTC99COMPLEX) test_syntax \
 	test_typecheck test_catch test_fortran1 test_fortran2 \
 	test_redirect test_include
-  @echo .
-  @echo All tests successful.
+   @echo .
+   @echo All tests successful.
 
+mex_setup:
+   $(MEX) -setup C++
+#
+#  Note: if setup/linking fails, set command-line-options file explicitely
+#  $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
 
 test_transfers:
    @echo .
@@ -99,8 +101,9 @@ test_include:
 
 clean:
 	-erase *~ *.mex* *.o* test_typecheck.log
-	-erase test_fortran1.m test_fortran2.m test_transfers.m test_catch.m
+	-erase test_fortran?.m test_transfers.m test_catch.m
 	-erase test_cpp_complex.m test_c99_complex.m
-	-erase test_transfersmex.cc test_catchmex.cc test_fortranmex.cc
+	-erase test_transfersmex.cc test_catchmex.cc
 	-erase test_cpp_complexmex.cc test_c99_complexmex.c
 	-erase test_redirect.m test_redirect1.m
+	-erase test_fortran?mex.c? test_includemex.cc

@@ -20,11 +20,21 @@ BISON=$(WINFLEXBISONPATH)\win_bison
 # Uncomment this line for C99 complex support
 # TESTC99COMPLEX=test_c99_complex
 
-# Define Mex compiler
-#MEX=   mex $(OOFLAG)                  # 32-bit MEX
-MEX=   mex -largeArrayDims $(OOFLAG)  # 64-bit MEX
-#MEX=   mkoctfile --mex                # GNU Octave.
+# Define Mex compiler for tests
+# - 32bit version
+#MATLABROOT="C:\Program Files (x86)\MATLAB\R2014b"
+#MEX= $(MATLABROOT)\bin\mex $(OOFLAG)
 
+# - 64bit version
+MATLABROOT="C:\Program Files\MATLAB\R2014b"
+MEX= $(MATLABROOT)\bin\mex -largeArrayDims $(OOFLAG)
+
+# - GNU Octave
+#OCTAVEROOT=
+#MEX= mkoctfile --mex
+
+# - dummy, perform compilation with MATLAB
+#MEX=echo
 
 #-------------------------------------------------------------------------
 # Compiler-Flags
