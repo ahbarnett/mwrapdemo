@@ -1,0 +1,59 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for interfacing to a C++ library
+# Barnett 7/30/15  modified by Hambach
+#-------------------------------------------------------------------------
+
+!INCLUDE <../make.win.inc>
+
+#-------------------------------------------------------------------------
+# Main-Targets
+#-------------------------------------------------------------------------
+
+all: mex_setup mexfile
+   @echo .
+   @echo Compilation successful. Run Matlab to test the Mexfile
+   @echo > MATLABROOT\matlab -nosplash -nodesktop -r test.m
+
+#-------------------------------------------------------------------------
+# Sub-Targets
+#-------------------------------------------------------------------------
+
+# first setup the MEX compiler
+#   Note: if setup/linking fails, set command-line-options file explicitly
+#   $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
+
+mex_setup:
+   @echo -------------------------------------------------------------
+   @echo 1. MEX Setup
+   @echo -------------------------------------------------------------
+   $(MEX) -setup C++
+
+# then pre-compile C-library
+# (we use MEX compiler to avoid -fPIC and other flag compatibility issues)
+
+lib.obj: lib.cc
+   @echo -------------------------------------------------------------
+   @echo 2. Compile lib.cc
+   @echo -------------------------------------------------------------
+	$(MEX) -c $**
+
+# then use mwrap to make the interface and the name of the final MEX file
+# Note: -cppcomplex needed as C99 complex numbers are not available in SDK7.1
+
+gateway.cc: demo.mw makefile
+   @echo -------------------------------------------------------------
+   @echo 3. Create Interface using MWrap
+   @echo -------------------------------------------------------------
+   $(MWRAP) -cppcomplex -mex gateway -mb -list demo.mw
+	$(MWRAP) -cppcomplex -mex gateway -c gateway.cc demo.mw
+
+# finally compile and link the interface with MEX (whatever libs needed)
+mexfile: gateway.cc lib.obj
+   @echo -------------------------------------------------------------
+   @echo 4. Compile interface + Link
+   @echo -------------------------------------------------------------
+   $(MEX) $**
+
+# Remove the MEX interface, MATLAB caller, and MEX file:
+clean:
+	-erase myfunc.m gateway.c *.obj *.mex*
