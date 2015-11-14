@@ -1,9 +1,8 @@
 /* minimal C library for MWrap demo. Barnett 7/30/15 */
 
 #include <math.h>
-#include <complex>
 #include <stdio.h>
-#include <matrix.h>
+#include "lib.hh"
 
 void myfunc(mwSize n, double* in, double* out, std::complex<double> *z, int flag)
 /* Just computes sin of a list of doubles, and squares a complex number,

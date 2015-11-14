@@ -9,14 +9,14 @@
 
 # for 64bit version, uncomment following two lines
 MEX="C:\Program Files\MATLAB\R2014b"\bin\mex
-MFLAGS_PLAT = -largeArrayDims
+MEXFLAGS_PLAT=-largeArrayDims
 
 # uncomment following lines if desired
 #DEBUGFLAG=-g                                 # enable debugging
 #OOFLAG=-DR2008OO                             # new-style classdef support
 #VERBOSEFLAG=-v COMPFLAGS="$COMPFLAGS -W4"    # verbose compiler output
 
-MFLAGS=$(MFLAGS_PLAT) $(DEBUGFLAG) $(OOFLAG) $(VERBOSEFLAG)
+MEXFLAGS=$(MEXFLAGS_PLAT) $(DEBUGFLAG) $(OOFLAG) $(VERBOSEFLAG)
 
 
 
