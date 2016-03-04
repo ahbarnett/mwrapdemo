@@ -3,4 +3,5 @@
 #include <complex>
 #include <matrix.h>
 
-void myfunc(mwSize n, double* in, double* out, std::complex<double> *z, int flag);
+void array2d(int n, double* a, int reps);
+void array2domp(int n, double* a, int reps);

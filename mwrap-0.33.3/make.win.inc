@@ -51,7 +51,7 @@ MEX= $(MATLABROOT)\bin\mex -largeArrayDims $(OOFLAG)
 # /GS /GL /W3 /Gy /Zc:wchar_t /Zi /Gm- /O2 /sdl /Fd"x64\Release\vc140.pdb" /Zc:inline /fp:precise /D "NDEBUG" /D "_CONSOLE" /D "_UNICODE" /D "UNICODE" /errorReport:prompt /WX- /Zc:forScope /Gd /Oi /MD /Fa"x64\Release\" /EHsc /nologo /Fo"x64\Release\" /Fp"x64\Release\mwrap.pch"
 
 CGFLAGS=/nologo /W4 /EHsc /D_CRT_SECURE_NO_DEPRECATE /D_CRT_NONSTDC_NO_DEPRECATE
-CRFLAGS=/DNDEBUG /ML /Ox
+CRFLAGS=/DNDEBUG /O1
 CDFLAGS=
 
 CFLAGS=$(CGFLAGS) $(CDFLAGS)
@@ -74,5 +74,5 @@ LGFLAGS=/NOLOGO
 LRFLAGS=
 LDFLAGS=/DEBUG
 
-LFLAGS=$(LIBS) $(LGFLAGS) $(LDFLAGS)
+LFLAGS=$(LIBS) $(LGFLAGS) $(LRFLAGS)
 

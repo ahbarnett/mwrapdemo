@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------
-# NMAKE-Makefile for interfacing to a C++ library
+# NMAKE-Makefile for interfacing to a C library, openMP & 2d array version
 # Barnett 7/30/15  modified by Hambach
 #-------------------------------------------------------------------------
 
@@ -20,13 +20,17 @@ all: mex_setup mexfile
 
 # first setup the MEX compiler
 #   Note: if setup/linking fails, set command-line-options file explicitly
-#   $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
+#         OpenMP not available in SDK7.1, use MVS C/C++ compiler instead
 
 mex_setup:
    @echo -------------------------------------------------------------
    @echo 1. MEX Setup
    @echo -------------------------------------------------------------
-   $(MEX) -setup C++
+#   $(MEX) -setup C++
+
+#  Note: if setup/linking fails, set command-line-options file explicitely
+#   $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
+   $(MEX) -setup:C:\Programme\MATLAB\R2014b\bin\win64\mexopts\msvcpp2013.xml
 
 # then pre-compile C-library
 # (we use MEX compiler to avoid -fPIC and other flag compatibility issues)
@@ -38,8 +42,6 @@ lib.obj: lib.cc
 	$(MEX) $(MEXFLAGS) -c $**
 
 # then use mwrap to make the interface and the name of the final MEX file
-# Note: -cppcomplex needed as C99 complex numbers are not available in SDK7.1
-
 gateway.cc: demo.mw
    @echo -------------------------------------------------------------
    @echo 3. Create Interface using MWrap
@@ -47,7 +49,8 @@ gateway.cc: demo.mw
    $(MWRAP) $(MWRAP_FLAGS) -mex gateway -mb -list demo.mw
 	$(MWRAP) $(MWRAP_FLAGS) -mex gateway -c gateway.cc demo.mw
 
-# finally compile and link the interface with MEX (whatever libs needed)
+# finally compile and link the interface with MEX 
+# add /openmp to compiler options and whatever libs are needed
 mexfile: lib.obj gateway.cc
    @echo -------------------------------------------------------------
    @echo 4. Compile interface + Link
@@ -56,4 +59,5 @@ mexfile: lib.obj gateway.cc
 
 # Remove the MEX interface, MATLAB caller, and MEX file:
 clean:
-	-erase myfunc.m gateway.cc *.obj *.mex*
+	-erase array2d.m array2domp.m myfunc.m gateway.cc *.obj *.mex*
+

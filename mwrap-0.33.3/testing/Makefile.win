@@ -20,7 +20,8 @@ mex_setup:
    $(MEX) -setup C++
 #
 #  Note: if setup/linking fails, set command-line-options file explicitely
-#  $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
+#   $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
+#   $(MEX) -setup:C:\Programme\MATLAB\R2014b\bin\win64\mexopts\msvcpp2013.xml
 
 test_transfers:
    @echo .

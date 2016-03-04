@@ -1,4 +1,4 @@
-% MWrap file for C demo. Generates gateway.c and myfunc.m
+% MWrap file for C++ demo. Generates gateway.cc and myfunc.m
 % Following is augmented MATLAB code, ie there are special lines beginning with
 % the @ and # symbols.
 

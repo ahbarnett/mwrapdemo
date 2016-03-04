@@ -1,8 +1,9 @@
-/* minimal C library showing openmp and overwriting arrays. Barnett 7/30/15 */
+/* minimal C++ library showing openmp and overwriting arrays. Barnett 7/30/15 */
 
 #include <math.h>
 #include <omp.h>
 #include <stdio.h>
+#include "lib.hh"
 
 void array2d(int n, double* a, int reps)
 /* Computes iterated sin of a list of doubles, overwriting.

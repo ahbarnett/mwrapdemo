@@ -1,6 +1,7 @@
 # mwrapdemo: simple MWrap examples
 
   Alex Barnett 7/31/15-8/3/15
+  compiling for Windows: Ralf Hambach 04/03/16
 
 [MWrap](http://www.cs.cornell.edu/~bindel/sw/mwrap/) is a super-useful code by David Bindel that turns the horrible pain of writing a MEX interface into a quick automatic procedure. To quote Bindel's introduction,
 
@@ -11,12 +12,26 @@ The present project contains simple, minimally complete examples showing how to 
 ### Dependencies
 
 [MATLAB](http://www.mathworks.com/products/matlab)  
-C and Fortran compilers supporting C99 and OpenMP.
+C and Fortran compilers supporting C99 and OpenMP
 If you are on a Mac system, you need Xcode to use MEX.  
-GNU make.  
+GNU make (Linux, Mac) or NMAKE (Windows).
 Optional: [MWrap](http://www.cs.cornell.edu/~bindel/sw/mwrap/), although a distribution of MWrap is also included in this repository.
 
-### Getting started
+
+### Contents of this repository
+
+`c/` - simple single-thread C example, 1D array, complex, and a Boolean  
+`c2domp/` - 2D array, multi-thread OpenMP C example  
+`f/` - simple single-thread Fortran example, 1D array, complex, and a Boolean  
+`f2domp/` - 2D array, multi-thread OpenMP Fortran example  
+`testall.m` - MATLAB script to run all demos  
+`makefile` - top-level makefile to compile all demos (use Makefile.win on Windows)
+`make.inc.example` - system-specific makefile settings (adapt make.inc.win on Windows)
+(copy to `make.inc` and edit that rather than changing this distributed file)
+`mwrap-0.33.3/` - modiefied version 0.33 of MWrap (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in `make.inc` to the location of your `mwrap` executable.
+
+
+### Getting started (Linux,Mac)
 
 Download this repository either via `git clone` or as zip archive, to a linux or Mac machine. Then
 
@@ -37,19 +52,8 @@ See the README files in each of the directories for more information.
 
 To remove generated/compiled objects, type `make clean` from the top level directory.
 
-### Contents of this repository
 
-`c/` - simple single-thread C example, 1D array, complex, and a Boolean  
-`c2domp/` - 2D array, multi-thread OpenMP C example  
-`f/` - simple single-thread Fortran example, 1D array, complex, and a Boolean  
-`f2domp/` - 2D array, multi-thread OpenMP Fortran example  
-`testall.m` - MATLAB script to run all demos  
-`makefile` - top-level makefile to compile all demos  
-`make.inc.example` - system-specific makefile settings
-(copy to `make.inc` and edit that rather than changing this distributed file)  
-`mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in `make.inc` to the location of your `mwrap` executable.  
-
-### My usage notes for MWrap
+#### My usage notes for MWrap
 
 * The makefiles I include contain useful compilation flags.
 * Function names cannot use _ (underscore), even though this is allowable in MATLAB, C, and Fortran. It will fail in a non-informative way if you try this.
@@ -58,13 +62,65 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 * Text output from Fortran `write(*,*)` doesn't seem to make it to the MATLAB terminal, unlike C stdout which does, at least when MATLAB is run with `-nodesktop`. mexPrintf is clumsy but works (see `f/lib.f`).
 * The Mac OSX flags require some tweaking: `-lgfortran` may need to be removed. Currently we have problems with `write` in Fortran. Also it seems Xcode doesn't even support OpenMP, so apparently Mac users wanting this will have to install gcc and adjust `mexopts.sh` to point mex to this compiler.
 
+
+
+### Getting started (Windows)
+
+Download this repository either via `git clone` or as zip archive, to a Windows machine. Then
+
+1. Install Bison/Flex (only needed, if you want to compile MWrap yourself)
+  * download [Win-flex-bison package(http://sourceforge.net/projects/winflexbison/)],  version 2.4.5/2.5.5
+  * extract files to some arbitrary path `<WINFLEXBISONPATH>`
+  * add installation path to windows PATH environment variable
+
+1. Install MWrap. For example use the local distribution of Mwrap (modified version 0.33.3):
+  * open power shell and cd to `mwrap-0.33.3/`
+  * adapt `make.inc.win`;
+  * run `nmake /C /f Makefile.win`
+  * run `nmake /C /f Makefile.win test`
+
+1. Check examples in directory `c/` and `c2omp`
+  * copy `make.inc.example` to `make.inc`. Type `mex` from the command line; you should get something like `mex:  nofile name given.` and something mentioning MATLAB. If you don't, then you need to find the path to your mex executable then edit `make.inc` to make the variable `MEX` point to your mex executable. 
+  * cd to the directory `c/` and run `nmake /C /f Makefile.win`
+  * cd to the directory `c2omp/` and run `nmake /C /f Makefile.win`
+  * open MATLAB and run `test` from the two directories (Fortran tests not yet implemented under Windows)
+
+#### Comments
+
+* The C-header `<complex.h>` is not available for MVS/SDK7.1 compiler. It has to be replaced by the C++ version `<complex>` and the C++ compiler has to be used throughout.
+* The CL-compiler envokes the C or C++ compiler according to the file extension (C-code: `.C`; C++-code: `.cc,.cpp`). This behavior can be overwritten using the command line options (`/Tc` and `/Tp`).
+* MVS/SDK7.1 does not include OpenMP. Use Microsoft Visual Studio C/C++ Compiler instead.
+* NMAKE has a problem to handle path names with spaces, you will typically get an error `"C:\Program" not found`
+* Many linker errors are due to C-style binding which is built into flex routines (requires `extern "C"` statements to enforce C symbol names although we use a C++ compiler to include `<complex>`. To investigate `*.obj` files for the actual symbol names, use `dumpbin /symbols file.obj`
+(see [dumpbin tutorial](https://support.microsoft.com/en-us/kb/177429))
+* If you have several Matlab versions installed (e.g. 32bit and 64bit), care must be taken to call the right mex-compiler and setup the environment variables correctly (always use the full name to the mex-compiler):
+  ```
+  "C:\Program Files (x86)\MATLAB\R2014b\mex" -setup C++             # 32bit
+  "C:\Program Files\MATLAB\R2014b\mex" -setup C++                   # 64bit
+  ```
+* specify the command-line-options file explicitely if compilation still fails
+  ```
+  "C:\Program Files (x86)\MATLAB\R2014b\mex" -setup:%APPDATA%\MathWorks\MATLAB\R2014b\mex_C++_win32.xml   # 32bit
+  "C:\Program Files\MATLAB\R2014b\mex" -setup:%APPDATA%\MathWorks\MATLAB\R2014b\mex_C++_win64.xml         # 64bit
+  ```
+* The examples in the MWrap distribution do not yet use mxIndex, mxSize types. This leads to many compiler warnings, if `/W4` is enabled
+  ```
+  > mex -v COMPFLAGS="$COMPFLAGS /W4" test_transfers.cc
+  ...  warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+  ```
+
 ### Other projects showing how to use MWrap
 
-[fmmlib2d](http://www.cims.nyu.edu/cmcl/fmm2dlib/fmm2dlib.html) - Fortran, with makefile for a variety of environments  
+[fmmlib2d](http://www.cims.nyu.edu/cmcl/fmm2dlib/fmm2dlib.html) - Fortran, with makefile for a variety of environments
 [lhelmfs](https://math.dartmouth.edu/~ahb/software/lhelmfs.tgz) - C, Linux environment  
 
 ### To do list
 
 * Set up flags on Mac and get `write` working there
-* Check this on Windows system; include makefiles
+
+
+
+
+
+
 

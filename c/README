@@ -1,23 +1,25 @@
-Very simple MWrap demo for interfacing MATLAB to a C library via MEX.
+Very simple MWrap demo for interfacing MATLAB to a C++ library via MEX.
 Shows 1d arrays, complex numbers and Boolean.
 Barnett 7/30/15
 
 To build the interface:
-make
+make                             # (Linux/Mac)
+nmake /C /f Makefile.win         # (Windows)
 
 Test script to run from a MATLAB shell:
 test
 
 To clean up this directory:
-make clean
+make clean                       # (Linux/Mac)
+nmake /C /f Makefile.win clean   # (Windows)
 
 Notes:
 
 Running the makefile does this:
-1) compiles the lib.c library into lib.o
-2) uses MWrap to read demo.mw and auto-generate gateway.c and myfunc.m
+1) compiles the lib.cc library into lib.o
+2) uses MWrap to read demo.mw and auto-generate gateway.cc and myfunc.m
    (it's worth looking at these two files for education purposes only)
-3) calls the MEX compiler to compile gateway.c and link to lib.o to
+3) calls the MEX compiler to compile gateway.cc and link to lib.o to
    give the MEX executable object gateway.mexa64 (for instance)
 In the MWrap documentation "gateway" is called "outputmex".
 

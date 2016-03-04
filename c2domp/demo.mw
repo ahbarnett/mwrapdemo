@@ -1,7 +1,9 @@
-% MWrap file for C demo w/ OpenMP.
-% Generates gateway.c, array2d.m and array2domp.m.
+% MWrap file for C++ demo w/ OpenMP.
+% Generates gateway.cc, array2d.m and array2domp.m.
 % Illustrates inout type, and multiple interfaces in a single gateway.
 % First see ../c/demo.mw on which this example builds.
+
+$ #include "lib.hh"
 
 % --------------------------------------------------------------------------
 @function y=array2d(x,reps)
