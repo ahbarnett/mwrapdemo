@@ -63,6 +63,21 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 [fmmlib2d](http://www.cims.nyu.edu/cmcl/fmm2dlib/fmm2dlib.html) - Fortran, with makefile for a variety of environments  
 [lhelmfs](https://math.dartmouth.edu/~ahb/software/lhelmfs.tgz) - C, Linux environment  
 
+### Problems (updated 2/3/17)
+
+Now with R2016b on ubuntu 14.04 LTS the openmp mex files fail upon execution from MATLAB, with the cryptic error:
+
+`Invalid MEX-file 'mwrapdemo/c2domp/gateway.mexa64': dlopen: cannot load any more object with static TLS.`
+
+This is despite the mex complilation reporting no errors.
+Mathworks states that they do not support openmp in MEX files, which defeats the point of them. However [this](http://www.mathworks.com/matlabcentral/answers/125117-openmp-mex-files-static-tls-problem) works as a fix for me, ie I do
+
+`export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libgomp.so.1`
+
+before starting MATLAB, and all is good. This bug is disturbing, and
+more info is [here](http://stackoverflow.com/questions/19268293/matlab-error-cannot-open-with-static-tls).
+
+
 ### To do list
 
 * Set up flags on Mac and get `write` working there
