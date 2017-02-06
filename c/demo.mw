@@ -1,6 +1,8 @@
-% MWrap file for C demo. Generates gateway.c and myfunc.m
+% MWrap file for C++ demo. Generates gateway.cc and myfunc.m
 % Following is augmented MATLAB code, ie there are special lines beginning with
 % the @ and # symbols.
+
+$ #include "lib.hh"
 
 @function [y z]=myfunc(x,w,flag)
 % MYFUNC  minimal function for MWrap demo
@@ -22,7 +24,7 @@ flag = double(flag);            % crucial even though it's int type in C
 % Code for calling the C function, using same variable names as for MATLAB.
 % Notes: 1) there is a trailing semicolon
 % 2) For dcomplex I have had more success with inout than inputs or outputs.
-# myfunc(int N, double[] x, output double[N] y, inout dcomplex[] w, int flag);
+# myfunc(mwSize N, double[] x, output double[N] y, inout dcomplex[] w, int flag);
 
 % do any MATLAB postprocessing here
 z = w;

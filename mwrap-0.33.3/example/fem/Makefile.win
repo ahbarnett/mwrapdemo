@@ -1,0 +1,18 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling fem example
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\make.win.inc>
+NMAKE=nmake /C /f Makefile.win
+
+all:
+ 	@if exist mwfem rmdir /s /q mwfem
+   @mkdir mwfem
+	@cd $(MAKEDIR)/src & $(NMAKE)
+	@cd $(MAKEDIR)/interface & $(NMAKE)
+
+clean:
+   @-cd $(MAKEDIR)/src  & $(NMAKE) clean
+   @-cd $(MAKEDIR)
+	@rmdir /s /q mwfem
+

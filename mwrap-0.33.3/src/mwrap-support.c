@@ -44,16 +44,14 @@
 
 
 /*
- * Support for 32-bit and 64-bit MEX files
+ * Assume 32 bit addressing for Matlab 6.5:
+ * See MEX option "compatibleArrayDims" for MEX in Matlab >= 7.7.
  */
-#ifndef mwSize
-#  define mwSize int
-#endif
-#ifndef mwIndex
-#  define mwIndex int
-#endif
-#ifndef mwSignedIndex
-#  define mwSignedIndex int
+#ifndef MWSIZE_MAX
+#  define mwSize  int32_T           // Defined in tmwtypes.h
+#  define mwIndex int32_T
+#  define mwSignedIndex int32_T
+#  define MWSIZE_MAX MAX_int32_T
 #endif
 
 

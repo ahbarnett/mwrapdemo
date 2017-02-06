@@ -1,0 +1,28 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling fem example
+#
+# Targets for object files (we compile with MEX to avoid headaches
+# about -fPIC and other flag compatibility issues)
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\..\make.win.inc>
+
+OBJS= \
+	assembler.obj mesh.obj \
+	gauss2by2.obj quad2d1.obj \
+	scalar1d.obj scalar2d.obj elastic2d1.obj
+
+all: $(OBJS)
+
+.cc.obj:
+	$(MEX) -c $*.cc
+
+elastic2d1.cc:
+	matexpr elastic2d.cc > elastic2d1.cc
+
+quad2d1.cc:
+	matexpr quad2d.cc > quad2d1.cc
+
+clean:
+	-erase *.obj
+

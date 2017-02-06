@@ -1,0 +1,63 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for interfacing to a C library, openMP & 2d array version
+# Barnett 7/30/15  modified by Hambach
+#-------------------------------------------------------------------------
+
+!INCLUDE <../make.win.inc>
+
+#-------------------------------------------------------------------------
+# Main-Targets
+#-------------------------------------------------------------------------
+
+all: mex_setup mexfile
+   @echo .
+   @echo Compilation successful. Run Matlab to test the Mexfile
+   @echo MATLABROOT\matlab -nosplash -nodesktop -r test
+
+#-------------------------------------------------------------------------
+# Sub-Targets
+#-------------------------------------------------------------------------
+
+# first setup the MEX compiler
+#   Note: if setup/linking fails, set command-line-options file explicitly
+#         OpenMP not available in SDK7.1, use MVS C/C++ compiler instead
+
+mex_setup:
+   @echo -------------------------------------------------------------
+   @echo 1. MEX Setup
+   @echo -------------------------------------------------------------
+#   $(MEX) -setup C++
+
+#  Note: if setup/linking fails, set command-line-options file explicitely
+#   $(MEX) -setup:$(APPDATA)\MathWorks\MATLAB\R2014b\mex_C++_win32.xml
+   $(MEX) -setup:C:\Programme\MATLAB\R2014b\bin\win64\mexopts\msvcpp2013.xml
+
+# then pre-compile C-library
+# (we use MEX compiler to avoid -fPIC and other flag compatibility issues)
+
+lib.obj: lib.cc
+   @echo -------------------------------------------------------------
+   @echo 2. Compile lib.cc
+   @echo -------------------------------------------------------------
+	$(MEX) $(MEXFLAGS) -c $**
+
+# then use mwrap to make the interface and the name of the final MEX file
+gateway.cc: demo.mw
+   @echo -------------------------------------------------------------
+   @echo 3. Create Interface using MWrap
+   @echo -------------------------------------------------------------
+   $(MWRAP) $(MWRAP_FLAGS) -mex gateway -mb -list demo.mw
+	$(MWRAP) $(MWRAP_FLAGS) -mex gateway -c gateway.cc demo.mw
+
+# finally compile and link the interface with MEX 
+# add /openmp to compiler options and whatever libs are needed
+mexfile: lib.obj gateway.cc
+   @echo -------------------------------------------------------------
+   @echo 4. Compile interface + Link
+   @echo -------------------------------------------------------------
+   $(MEX) $(MEXFLAGS) $**
+
+# Remove the MEX interface, MATLAB caller, and MEX file:
+clean:
+	-erase array2d.m array2domp.m myfunc.m gateway.cc *.obj *.mex*
+

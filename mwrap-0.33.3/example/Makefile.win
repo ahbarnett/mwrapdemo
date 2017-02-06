@@ -1,0 +1,24 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling Mwrap examples
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\make.win.inc>
+NMAKE=nmake /C /f Makefile.win
+
+all:
+	@echo Entering foobar  & cd $(MAKEDIR)\foobar   & $(NMAKE)
+	@echo Entering eventq  & cd $(MAKEDIR)\eventq   & $(NMAKE)
+	@echo Entering eventq2 & cd $(MAKEDIR)\eventq2  & $(NMAKE)
+	@echo Entering zlib    & cd $(MAKEDIR)\zlib     & $(NMAKE)
+	@echo Entering fem     & cd $(MAKEDIR)\fem      & $(NMAKE)
+   @echo .
+   @echo All examples compiled successfully.
+   @echo Start Matlab and run the test scripts in the examples directory.
+
+clean:
+   @-cd $(MAKEDIR)/foobar  & $(NMAKE) clean
+	@-cd $(MAKEDIR)/eventq  & $(NMAKE) clean
+   @-cd $(MAKEDIR)/eventq2 & $(NMAKE) clean
+   @-cd $(MAKEDIR)/zlib    & $(NMAKE) clean
+   @-cd $(MAKEDIR)/fem     & $(NMAKE) clean
+   @-cd $(MAKEDIR)

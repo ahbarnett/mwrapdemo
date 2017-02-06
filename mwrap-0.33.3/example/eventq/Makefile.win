@@ -1,0 +1,30 @@
+#-------------------------------------------------------------------------
+# NMAKE-Makefile for compiling eventq example
+#-------------------------------------------------------------------------
+
+!INCLUDE <..\..\make.win.inc>
+MW=..\..\mwrap.exe
+
+all: mex_setup pmex cmex hmex
+
+mex_setup:
+   @$(MEX) -setup C++
+
+pmex:
+	@$(MW) -mex eventqpmex -c eventqpmex.cc -mb eventq_plain.mw
+	@$(MEX) eventqpmex.cc
+
+hmex:
+	@$(MW) -mex eventqhmex -c eventqhmex.cc -mb eventq_handle.mw
+	@$(MEX) eventqhmex.cc
+
+cmex:
+	@if exist @eventq rmdir /s /q @eventq
+   @mkdir @eventq
+	@$(MW) -mex eventqcmex -c eventqcmex.cc -mb eventq_class.mw
+	@$(MEX) eventqcmex.cc
+
+clean:
+	-rmdir /s /q @eventq
+	-erase EventQ_*.m eventqh.m
+	-erase eventqcmex.* eventqpmex.* eventqhmex.* *.obj

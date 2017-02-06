@@ -12,11 +12,9 @@
 #include <string>
 #include "mwrap-ast.h"
 
-extern "C" {
-    int yylex();
-    int yywrap();
-    int yyerror(const char* s);
-}
+extern int yylex();
+extern "C" int yywrap();
+extern "C" int yyerror(const char* s);
 
 using std::string;
 
@@ -235,6 +233,7 @@ int yyerror(const char* s)
 {
     fprintf(stderr, "Parse error (%s:%d): %s\n", current_ifname.c_str(),
             linenum, s);
+    return 0;
 }
 
 char* mwrap_strdup(const char* s)
