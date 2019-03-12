@@ -1,0 +1,32 @@
+# mwrapdemo makefile for interfacing to a C library, openMP & 2d array version
+# Barnett 7/30/15. Nick Carriero no-MEX tweak, 3/12/19
+include ../make.inc
+
+MATLABROOT=/Applications/MATLAB_R2018b.app
+
+# use gcc/gfortran installed from: https://github.com/fxcoudert/gfortran-for-macOS/releases
+FC=/usr/local/gfortran/bin/gfortran
+
+# This is the task run if "make" is done with no arguments ("mexfile" is not
+# a file, just a name for a compilation task given below):
+default: mexfile
+
+# How to compile your C library function: (-fPIC is needed for linking to MEX)
+lib.o: lib.f makefile
+	$(FC) -fPIC -O2 -fopenmp -c lib.f
+
+# Tell mwrap to make the interface and the name of the final MEX file:
+# (note -mb here makes separate .m file for each @ function in the .mw)
+gateway.c: demo.mw makefile
+	$(MWRAP) -list -mex gateway -mb demo.mw
+	$(MWRAP) -mex gateway -c gateway.c demo.mw
+
+# How to compile the interface (whatever libs needed).
+# This doesn't use mex. It sets appropriate include and library paths, and specifies needed libraries. See:
+# https://www.mathworks.com/matlabcentral/answers/377799-compiling-mex-files-without-the-mex-command
+mexfile: gateway.c lib.o makefile
+	$(FC) -o gateway.mexmaci64 -shared -fPIC -fopenmp -I$(MATLABROOT)/extern/include -DMATLAB_MEX_FILE -DMATLAB_DEFAULT_RELEASE=R2018a gateway.c lib.o -L$(MATLABROOT)/bin/maci64 -lmx -lmex -lmat -lm 
+
+# Remove the MEX interface, MATLAB caller, and MEX file:
+clean:
+	rm -f array2d.m array2domp.m gateway.c *.o *.mex* *~

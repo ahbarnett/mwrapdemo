@@ -11,6 +11,7 @@ FC = gfortran
 # Change this to location of MATLAB's command line mex executable:
 # (For a Mac system, this is something of the form
 #  /Applications/MATLAB_R2014a.app/bin/mex )
+# For Mac if you want to bypass mex as the compiler, see */makefile.nomex
 
 MEX = mex
 

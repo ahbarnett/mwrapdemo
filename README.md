@@ -57,6 +57,8 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 * If you want to pass a flag to C, this is as an int. However, Booleans in MATLAB passed directly cause a segfault. They must be converted to doubles. See `c/demo.mw`
 * Text output from Fortran `write(*,*)` doesn't seem to make it to the MATLAB terminal, unlike C stdout which does, at least when MATLAB is run with `-nodesktop`. mexPrintf is clumsy but works (see `f/lib.f`).
 * The Mac OSX flags require some tweaking: `-lgfortran` may need to be removed. Currently we have problems with `write` in Fortran. Also it seems Xcode doesn't even support OpenMP, so apparently Mac users wanting this will have to install gcc and adjust `mexopts.sh` to point mex to this compiler.
+As an alternative we suggest bypassing mex as the compiler, and using GCC.
+Examples are in `{f,c}2domp/makefile.nomex`.
 
 ### Other projects showing how to use MWrap
 
@@ -83,3 +85,6 @@ more info is [here](http://stackoverflow.com/questions/19268293/matlab-error-can
 * Set up flags on Mac and get `write` working there
 * Check this on Windows system; include makefiles
 
+### Acknowledgments
+
+* Nick Carriero for `makefile.nomex` examples for OSX+GCC+MATLAB+OpenMP.
