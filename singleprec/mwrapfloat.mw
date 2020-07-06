@@ -1,0 +1,19 @@
+% try float (single prec) arrays in mwrap. Length-1 for now. Barnett 7/5/20
+%
+% Compile with:
+% mwrap -mex mwrapfloat -c mwrapfloat.cpp -mb mwrapfloat.mw
+% mex mwrapfloat.cpp -largeArrayDims -output mwrapfloat
+
+% then test in matlab:
+% c = add(1,2); class(c)
+% c = addf(1,2); class(c)             % currently gives 'double'
+% c = addf(single(1),single(2));      % fails with "Invalid array argument"
+
+$ void add(double *a, double *b, double *c) { *c = *a + *b; }
+$ void addf(float *a, float *b, float *c) { *c = *a + *b; }
+
+@function c=add(a,b)
+# add(double[] a, double[] b, output double[1]c);
+
+@function c=addf(a,b)
+# addf(float[] a, float[] b, output float[1]c);
