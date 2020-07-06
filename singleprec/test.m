@@ -1,4 +1,6 @@
 % test the funcs in mwrapfloat. Barnett & Gimbutas.
+format long g
+format compact
 
 c = add(double(1/3),double(1/3)), class(c)   % double->double, as mwrap 0.33.3 designed for!
 
