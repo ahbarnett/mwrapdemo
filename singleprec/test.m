@@ -64,7 +64,13 @@ end
 c = addc(zf,zf)   % input as designed, should give single
 
 fprintf('\narray complex routines...\n')
-c = arraddz(z,z), class(c)
+
+try
+  c = arraddz(z,z), class(c)     % input as designed, double
+catch ME
+  ME.message
+  disp('****** bad')
+end
 
 try
 c = arraddz(zf,zf)   % should error
@@ -80,5 +86,9 @@ catch ME
   disp('good')
 end
 
-c = arraddc(zf,zf)   % input as designed, should give single
-
+try
+  c = arraddc(zf,zf)    % input as designed, should give single
+catch ME
+  ME.message
+  disp('****** bad')
+end
