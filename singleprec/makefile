@@ -5,7 +5,7 @@
 default: matlab
 
 matlab: mwrapfloat.mw
-	$(MWRAP) -mex mwrapfloat -c mwrapfloat.cpp -mb mwrapfloat.mw -cppcomplex
+	$(MWRAP) -mex mwrapfloat -c mwrapfloat.cpp -mb mwrapfloat.mw -ccpcomplex
 	$(MEX) mwrapfloat.cpp -largeArrayDims -output mwrapfloat
 
 octave: matlab
