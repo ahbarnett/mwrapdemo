@@ -1,19 +1,76 @@
-% try float (single prec) arrays in mwrap. Length-1 for now. Barnett 7/5/20
+% try float (single prec) arrays in mwrap. Length-1 for now.
+% Barnett & Gimbutas 7/5/20-7/8/20
 %
 % Compile with:
-% mwrap -mex mwrapfloat -c mwrapfloat.cpp -mb mwrapfloat.mw
+% mwrap -mex mwrapfloat -c mwrapfloat.cpp -mb mwrapfloat.mw -cppcomplex
 % mex mwrapfloat.cpp -largeArrayDims -output mwrapfloat
 
-% then test in matlab:
-% c = add(1,2); class(c)
-% c = addf(1,2); class(c)             % currently gives 'double'
-% c = addf(single(1),single(2));      % fails with "Invalid array argument"
+% then test in matlab with test.m
+% *** need pass-fail
 
-$ void add(double *a, double *b, double *c) { *c = *a + *b; }
-$ void addf(float *a, float *b, float *c) { *c = *a + *b; }
 
+% REAL======================================================
+
+% scalar real.........
+
+$ void add(double a, double b, double *c) { *c = a + b; }
 @function c=add(a,b)
-# add(double[] a, double[] b, output double[1]c);
+# add(double a, double b, output double[1]c);
 
+$ void addf(float a, float b, float *c) { *c = a + b; }
 @function c=addf(a,b)
-# addf(float[] a, float[] b, output float[1]c);
+# addf(float a, float b, output float[1]c);
+
+% array real........
+
+$ void arradd(double *a, double *b, double *c, int n)
+$ { for (int i=0;i<n;++i) c[i] = a[i] + b[i]; }
+@function c=arradd(a,b)
+n = numel(a);
+# arradd(double[n] a, double[n] b, output double[n]c, int n);
+
+$ void arraddf(float *a, float *b, float *c, int n)
+$ { for (int i=0;i<n;++i) c[i] = a[i] + b[i]; }
+@function c=arraddf(a,b)
+n = numel(a);
+# arraddf(float[n] a, float[n] b, output float[n]c, int n);
+
+
+% COMPLEX=========================================================
+
+$#include <complex>
+% for C func defs...
+$typedef std::complex<double> dcomplex;
+$typedef std::complex<float> fcomplex;
+
+% as per mwrap defining new complex types... but use -cppcomplex instead
+%$#define real_dcomplex(z) std::real(z)
+%$#define imag_dcomplex(z) std::imag(z)
+%$#define setz_dcomplex(z,r,i) *z = dcomplex(r,i)
+%$#define real_fcomplex(z) std::real(z)
+%$#define imag_fcomplex(z) std::imag(z)
+%$#define setz_fcomplex(z,r,i) *z = fcomplex(r,i)
+
+% scalar complex.........
+
+$ void addz(dcomplex a, dcomplex b, dcomplex *c) { *c = a + b; }
+@function c=addz(a,b)
+# addz(dcomplex a, dcomplex b, output dcomplex[1]c);
+
+$ void addc(fcomplex a, fcomplex b, fcomplex *c) { *c = a + b; }
+@function c=addc(a,b)
+# addc(fcomplex a, fcomplex b, output fcomplex[1]c);
+
+% array complex ........
+
+$ void arraddz(dcomplex *a, dcomplex *b, dcomplex *c, int n)
+$ { for (int i=0;i<n;++i) c[i] = a[i] + b[i]; }
+@function c=arraddz(a,b)
+n = numel(a);
+# arraddz(dcomplex[n] a, dcomplex[n] b, output dcomplex[n]c, int n);
+
+$ void arraddc(fcomplex *a, fcomplex *b, fcomplex *c, int n)
+$ { for (int i=0;i<n;++i) c[i] = a[i] + b[i]; }
+@function c=arraddc(a,b)
+n = numel(a);
+# arraddc(fcomplex[n] a, fcomplex[n] b, output fcomplex[n]c, int n);
