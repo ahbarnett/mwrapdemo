@@ -66,7 +66,7 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 * Function names cannot use _ (underscore), even though this is allowable in MATLAB, C, and Fortran. It will fail in a non-informative way if you try this.
 * To get mex compilation working on an older system you may need to edit `bin/mexopts.sh` in your MATLAB installation directory. On an ubuntu 12.04 system running MATLAB R2012a I needed to add the flag `--openmp` to `LDFLAGS` in the `glnxa64)` case.
 * If you want to pass a flag to C, this is as an int. However, Booleans in MATLAB passed directly cause a segfault. They must be converted to doubles. See `c/demo.mw`
-* Text output from Fortran `write(*,*)` now does seem to make it to the MATLAB terminal, unlike C stdout which does, at least when MATLAB is run with `-nodesktop`. The clumsy use of mexPrintf failed in Octave and has been removed (8/26/22).
+* Text output from Fortran `write(*,*)` now does (as of ubuntu 22.04) seem to make it to the MATLAB terminal, even when MATLAB is run with `-nodesktop`. The clumsy use of mexPrintf failed in Octave and has been removed (8/26/22).
 * The Mac OSX flags require some tweaking: `-lgfortran` may need to be removed. Currently we have problems with `write` in Fortran. Also it seems Xcode doesn't even support OpenMP, so apparently Mac users wanting this will have to install gcc and adjust `mexopts.sh` to point mex to this compiler. As an alternative we suggest bypassing mex as the compiler, and using GCC. Examples are in `{f,c}2domp/makefile.nomex`.
 
 
