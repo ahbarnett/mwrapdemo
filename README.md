@@ -23,17 +23,17 @@ If you are on a mac OSX system, you'll need Xcode to use MATLAB's MEX compiler.
 
 Download this repository either via `git clone` or as zip archive, to a linux or Mac machine. Then
 
-1. Install [MWrap](https://github.com/zgimbutas/mwrap) by following its instruction. Ubunutu/debian users can get an old version via `sudo apt install mwrap`. Create a link, eg via `ln -s /your-mwrap-installation/mwrap /usr/bin/mwrap`, or adjust your `PATH`, so that `mwrap` is in your path. Check this via `which mwrap`.
+1. Install [MWrap](https://github.com/zgimbutas/mwrap) by following its instructions. Ubuntu/debian users can get an old version via `sudo apt install mwrap`. Create a link, eg via `ln -s /your-mwrap-installation/mwrap ~/bin/mwrap`, or adjust your `PATH` in `.bashrc` so that `mwrap` is in your path. Check this worked via `which mwrap`.
 
-1. Copy `make.inc.example` to `make.inc`, and make any local changes to `make.inc` if needed. The main one is to decide to switch the `MEX` variable to use Octave instead of the default MATLAB.
+1. Copy `make.inc.example` to `make.inc`, and make any local changes to `make.inc` if needed. The main one is: decide to switch the `MEX` command to use Octave instead of the default MATLAB.
 
 1. For MATLAB you'll want to check that `mex` is in your path. For Octave you'll want to check that `mkoctfile` is in your path. Update `make.inc` to the correct paths if they need to be. (Sometimes on Mac OSX, `mex` calls pdftex in which case you have to give the full path to `mex` such as `/Applications/MATLAB_2012a.app/bin/mex`.)
 
-1. Check you have the compilers `gcc` and `gfortran`. If not, adjust the variables `CC` and `FC` respectively in `make.inc` to point to your compilers.
+1. Check you have the compilers `gcc` and `gfortran`. If not, adjust the variables `CC` and `FC` respectively in `make.inc` to point to your compilers, which have to be compatible (GLIBC, etc) with `mex` and/or `mkoctfile`.
 
-1. Type `make`. This should make all examples in the five directories. If it breaks at some point, don't panic; instead `cd` to each the four directories in turn and try `make`, to see what functionality you can get.
+1. Type `make`. This should make all examples in the five directories. If it breaks at some point, don't panic; instead `cd` to each directory in turn and try `make`, to see what functionality you can get.
 
-1. From MATLAB, in the main directory, type `testall` which should run five tests, each returning a set of error figures, which should be small. Or, instead, if you set `make.inc` to use Octave, run `octave testall.m`. If something breaks, you can go into individual directories and try running `test` in each.
+1. From MATLAB, in the main directory, type `testall` which should run all tests, each returning a set of error figures, which should be small. Or, instead, if you set `make.inc` to use Octave, from the shell do `octave testall.m`. If something breaks, you can go into individual directories and try running `test` in each.
 
 See the README files in each of the directories for more information.
 
@@ -56,11 +56,12 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 
 ### Other projects showing how to use MWrap
 
-[fmmlib2d](http://www.cims.nyu.edu/cmcl/fmm2dlib/fmm2dlib.html) - Fortran, with makefile for a variety of environments  
+[BIE3D time-domain interpolation](https://github.com/ahbarnett/BIE3D/tree/master/timedomainwaveeqn/timeinterp) - Fortran90, linux  
+[fmmlib3d](https://github.com/zgimbutas/fmmlib3d/tree/master/matlab) - Fortran, with makefile for a variety of environments  
 [lhelmfs](https://math.dartmouth.edu/~ahb/software/lhelmfs.tgz) - C, Linux environment  
 
 
-### Usage notes for MWrap (may be obsolete)
+### Usage notes for MWrap
 
 * Function names cannot use _ (underscore), even though this is allowable in MATLAB, C, and Fortran. It will fail in a non-informative way if you try this.
 * To get mex compilation working on an older system you may need to edit `bin/mexopts.sh` in your MATLAB installation directory. On an ubuntu 12.04 system running MATLAB R2012a I needed to add the flag `--openmp` to `LDFLAGS` in the `glnxa64)` case.
