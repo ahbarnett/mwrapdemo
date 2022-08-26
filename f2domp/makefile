@@ -8,7 +8,7 @@ default: mexfile
 
 # How to compile your Fortran library: (-fPIC is needed for linking to MEX)
 lib.o: lib.f makefile
-	$(FC) -fPIC -O2 --openmp -c lib.f
+	$(FC) -fPIC $(FFLAGS) --openmp -c lib.f
 
 # Tell mwrap to make the interface and the name of the final MEX file:
 # (note -mb here makes separate .m file for each @ function in the .mw)

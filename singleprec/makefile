@@ -8,5 +8,5 @@ matlab: mwrapfloat.mw
 	$(MWRAP) -mex mwrapfloat -c mwrapfloat.cpp -mb mwrapfloat.mw -cppcomplex
 	$(MEX) mwrapfloat.cpp -largeArrayDims -output mwrapfloat
 
-octave: matlab
-	mkoctfile --mex  mwrapfloat.cpp -output mwrapfloat -cppcomplex
+clean:
+	rm -f *add*.m mwrapfloat.cpp *.o *.mex* *~

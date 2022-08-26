@@ -8,7 +8,7 @@ default: mexfile
 
 # How to compile your C library function: (-fPIC is needed for linking to MEX)
 lib.o: lib.c makefile
-	$(CC) -fPIC -O3 -c lib.c
+	$(CC) -fPIC -O2 $(CFLAGS) -c lib.c
 
 # Tell mwrap to make the interface and the name of the final MEX file:
 # Note: -c99complex assumes usual C complex numbers (see MWrap docs)
@@ -16,7 +16,7 @@ gateway.c: demo.mw makefile
 	$(MWRAP) -c99complex -mex gateway -mb -list demo.mw
 	$(MWRAP) -c99complex -mex gateway -c gateway.c demo.mw
 
-# How to make MATLAB/MEX compile the interface (whatever libs needed):
+# How to make MEX/mkoctfile compile the interface (whatever libs needed):
 mexfile: gateway.c lib.o makefile
 	$(MEX) gateway.c lib.o -largeArrayDims -lm
 
