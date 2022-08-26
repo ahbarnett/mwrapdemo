@@ -1,33 +1,35 @@
-# mwrapdemo: simple MWrap examples
+# mwrapdemo: simple MWrap examples for MATLAB calling C/Fortran
 
-  Alex Barnett 7/31/15-8/3/15
+  Alex Barnett
 
-[MWrap](http://www.cs.cornell.edu/~bindel/sw/mwrap/) is a super-useful code by David Bindel that turns the horrible pain of writing a MEX interface into a quick automatic procedure. To quote Bindel's introduction,
+[MWrap](https://github.com/zgimbutas/mwrap) is a super-useful code originated by David Bindel that turns the horrible pain of writing a MEX interface into a quick automatic procedure. To quote Bindel's introduction,
 
 >From a set of augmented MATLAB script files, MWrap will generate a MEX gateway to desired C/C\++ and FORTRAN function calls and MATLAB function files to access that gateway. MWrap takes care of the details of converting to and from MATLAB's data structures, allocating and freeing temporary storage, handling object upcasts (even in the presence of multiple inheritance), and catching C\++ exceptions. The gateway functions also work with recent versions of Octave when compiled with `mkoctfile --mex.`
 
-The present project contains simple, minimally complete examples showing how to use MWrap to link to a C or Fortran library, pass in and out 1D and 2D arrays, handle complex and Boolean types, and use OpenMP (a big reason to use MEX). These are essential for scientific computing, but I have found require care. The goal is to make the extra layer of complexity that MWrap introduces as clear as possible. Use them as templates for your codes. Basic makefiles are given which also are useful templates. These examples complement Bindel's "foobar" example, and much more elaborate examples, in `mwrap-0.33.3/examples`. Currently they are tested only on linux and Mac.
+The present project contains simple, minimally complete examples showing how to use MWrap to link to a C or Fortran library, pass in and out 1D and 2D arrays, handle complex and Boolean types, and use OpenMP (a big reason to use MEX). These are essential for scientific computing, but I have found require care. The goal is to make the extra layer of complexity that MWrap introduces as clear as possible. Use them as templates for your codes. Basic makefiles are given which also are useful templates. These examples complement Bindel's "foobar" and other more complicated C++-style examples that may not be obvious to new users. Currently we test only on linux and Mac.
 
 ### Dependencies
 
-[MATLAB](http://www.mathworks.com/products/matlab)  
-C and Fortran compilers supporting C99 and OpenMP.
-If you are on a Mac system, you need Xcode to use MEX.  
-GNU make.  
-Optional: [MWrap](http://www.cs.cornell.edu/~bindel/sw/mwrap/), although a distribution of MWrap is also included in this repository.
+* [MATLAB](http://www.mathworks.com/products/matlab)  
+* [MWrap](https://github.com/zgimbutas/mwrap)  
+* C and Fortran compilers supporting C99 and OpenMP  
+* GNU make  
+
+If you are on a Mac system, you'll need Xcode to use MATLAB's MEX compiler.
 
 ### Getting started
 
 Download this repository either via `git clone` or as zip archive, to a linux or Mac machine. Then
 
-1. Install MWrap. Recommended is to install globally on your system, eg via `sudo apt-get install mwrap` on ubuntu or debian linux, or from [here](http://www.cs.cornell.edu/~bindel/sw/mwrap/). Then in this case copy `make.inc.example` to `make.inc`, and
-edit `make.inc` to point the `MWRAP` variable to wherever your `mwrap` executable is. Instead you may install locally: change directory into `mwrap-0.33.3/` and type `make`. This makes the executable `mwrap`. If this fails, see the MWrap documentation `mwrap.pdf`, or failing that contact David Bindel.
+1. Install [MWrap](https://github.com/zgimbutas/mwrap) by following its instruction. Ubunutu/debian users can get an old version via `sudo apt install mwrap`. Create a link, eg via `ln -s /your/mwrap/installation/mwrap /usr/bin/mwrap`, or adjust your `PATH`, so that `mwrap` is in your path. Check via `which mwrap`.
 
-1. Go back to the main `mwrapdemo` directory. Make sure you copied `make.inc.example` to `make.inc`. Type `mex` from the command line; you should get something like `mex:  nofile name given.` and something mentioning MATLAB. If you don't, then you need to find the path to your mex executable then edit `make.inc` to make the variable `MEX` point to your mex executable. (Sometimes on a Mac `mex` calls pdftex in which case you have to give the full path to `mex` such as `/Applications/MATLAB_2012a.app/bin/mex`.)
+1. Copy `make.inc.example` to `make.inc`, and make any local changes to `make.inc` if needed, as follows.
+
+1. Go back to the main `mwrapdemo` directory. Type `mex` from the command line; you should get something like `mex:  nofile name given.` and something mentioning MATLAB. If you don't, then you need to find the path to your mex executable then edit `make.inc` to make the variable `MEX` point to your mex executable. (Sometimes on a Mac `mex` calls pdftex in which case you have to give the full path to `mex` such as `/Applications/MATLAB_2012a.app/bin/mex`.)
 
 1. Check you have the compilers `gcc` and `gfortran`. If not, adjust the variables `CC` and `FC` respectively in `make.inc` to point to your compilers.
 
-1. Type `make`. This should make all examples in the four directories. If it breaks at some point, don't panic; instead `cd` to each the four directories in turn and type `make`, to see what functionality you can get.
+1. Type `make`. This should make all examples in the four directories. If it breaks at some point, don't panic; instead `cd` to each the four directories in turn and try `make`, to see what functionality you can get.
 
 1. From MATLAB, in the main directory, type `testall` which should run four tests, each returning a set of error figures, which should be small. As above, if you weren't able to make all four directories, `cd` to the ones that worked and try `test` in MATLAB.
 
@@ -37,6 +39,7 @@ See the README files in each of the directories for more information.
 
 To remove generated/compiled objects, type `make clean` from the top level directory.
 
+
 ### Contents of this repository
 
 `c/` - simple single-thread C example, 1D array, complex, and a Boolean  
@@ -45,13 +48,17 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 `f2domp/` - 2D array, multi-thread OpenMP Fortran example  
 `testall.m` - MATLAB script to run all demos  
 `makefile` - top-level makefile to compile all demos  
-`make.inc.example` - system-specific makefile settings
-(copy to `make.inc` and edit that rather than changing this distributed file)  
-`mwrap-0.33.3/` - version 0.33 of MWrap included for convenience (you may want to check Bindel's page for a later version). If you don't use this, then you'll need to change the `MWRAP` variable in `make.inc` to the location of your `mwrap` executable.
+`make.inc.example` - system-specific makefile settings (copy to `make.inc` and edit that rather than changing this distributed file)  
 `singleprec/` - native float tests (experimental, needs mwrap>=0.33.11, 7/6/20)  
 
 
-### My usage notes for MWrap
+### Other projects showing how to use MWrap
+
+[fmmlib2d](http://www.cims.nyu.edu/cmcl/fmm2dlib/fmm2dlib.html) - Fortran, with makefile for a variety of environments  
+[lhelmfs](https://math.dartmouth.edu/~ahb/software/lhelmfs.tgz) - C, Linux environment  
+
+
+### Usage notes for MWrap (may be obsolete)
 
 * The makefiles I include contain useful compilation flags.
 * Function names cannot use _ (underscore), even though this is allowable in MATLAB, C, and Fortran. It will fail in a non-informative way if you try this.
@@ -62,10 +69,6 @@ To remove generated/compiled objects, type `make clean` from the top level direc
 As an alternative we suggest bypassing mex as the compiler, and using GCC.
 Examples are in `{f,c}2domp/makefile.nomex`.
 
-### Other projects showing how to use MWrap
-
-[fmmlib2d](http://www.cims.nyu.edu/cmcl/fmm2dlib/fmm2dlib.html) - Fortran, with makefile for a variety of environments  
-[lhelmfs](https://math.dartmouth.edu/~ahb/software/lhelmfs.tgz) - C, Linux environment  
 
 ### Problems (updated 2/3/17)
 
@@ -84,8 +87,10 @@ more info is [here](http://stackoverflow.com/questions/19268293/matlab-error-can
 
 ### To do list
 
-* Set up flags on Mac and get `write` working there
+* Set up flags on Mac and get `write` working there  
 * Check this on Windows system; include makefiles
+* Include Octave version (need to not use mexPrintf which octave doens't have?)  
+
 
 ### Acknowledgments
 
